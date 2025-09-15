@@ -46,7 +46,7 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
 
 
-  <title>In-Context Brush: Zero-shot Customized Subject Insertion - Yu Xu et al.</title>
+  <title>In-Context Brush: Zero-shot Customized Subject Insertion</title>
 
   <!-- Favicon and App Icons -->
   <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
@@ -142,14 +142,13 @@
 
   <!-- More Works Dropdown -->
   <div class="more-works-container">
-    <button class="more-works-btn" onclick="toggleMoreWorks()" title="View More Works from Our Lab">
+    <button class="more-works-btn" onclick="toggleMoreWorks()" title="View More Works">
       <i class="fas fa-flask"></i>
       More Works
-      <i class="fas fa-chevron-down dropdown-arrow"></i>
+      <i class="fas fa-chevron-up dropdown-arrow"></i>
     </button>
     <div class="more-works-dropdown" id="moreWorksDropdown">
       <div class="works-list">
-        <!-- Related works from our lab -->
         <a href="https://yuci-gpt.github.io/headrouter/" class="work-item" target="_blank">
           <div class="work-info">
             <h5>HeadRouter: A Training-free Image Editing Framework for MM-DiTs by Adaptively Routing Attention Heads</h5>
@@ -167,11 +166,9 @@
         <div class="container is-max-desktop">
           <div class="columns is-centered">
             <div class="column has-text-centered">
-              <!-- TODO: Replace with your paper title -->
               <h1 class="title is-1 publication-title">In-Context Brush: Zero-shot Customized Subject Insertion with
                 Context-Aware Latent Space Manipulation</h1>
               <div class="is-size-5 publication-authors">
-                <!-- TODO: Replace with your paper authors and their personal links -->
                 <span class="author-block">
                   <a href="#" target="_blank">Yu Xu</a><sup>1,2</sup>,</span>
                 <span class="author-block">
@@ -194,20 +191,17 @@
               </div>
 
               <div class="is-size-5 publication-authors">
-                <!-- TODO: Replace with your institution and conference/journal info -->
                 <span class="author-block"><sup>1</sup>Institute of Computing Technology, Chinese Academy of
                   Sciences<br><sup>2</sup>University of Chinese Academy of Sciences<br><sup>3</sup>University of
                   Konstanz<br><sup>4</sup>National Cheng-Kung University</span>
-                <!-- TODO: Remove this line if no equal contribution -->
               </div>
 
-              <div class="is-size-3 publication-authors">
-                <span class="author-block">ACM SIGGRAPH ASIA 2025</span>
+              <div class="publication-venue">
+                <span class="venue-block">ACM SIGGRAPH ASIA 2025</span>
               </div>
 
               <div class="column has-text-centered">
                 <div class="publication-links">
-                  <!-- TODO: Update with your arXiv paper ID -->
                   <span class="link-block">
                     <a href="https://arxiv.org/pdf/2505.20271.pdf" target="_blank"
                       class="external-link button is-normal is-rounded is-dark">
@@ -218,7 +212,6 @@
                     </a>
                   </span>
 
-                  <!-- TODO: Update with your arXiv paper ID -->
                   <span class="link-block">
                     <a href="https://arxiv.org/abs/2505.20271" target="_blank"
                       class="external-link button is-normal is-rounded is-dark">
@@ -230,7 +223,6 @@
                   </span>
 
 
-                  <!-- TODO: Replace with your GitHub repository URL -->
                   <span class="link-block">
                     <a href="https://github.com/ICTMCG/In-context-Brush" target="_blank"
                       class="external-link button is-normal is-rounded is-dark">
@@ -253,12 +245,12 @@
     <section class="hero teaser">
       <div class="container is-max-desktop">
         <div class="hero-body">
-          <!-- TODO: Replace with your teaser video -->
           <video poster="" id="tree" autoplay controls muted loop height="100%" preload="metadata">
-            <!-- TODO: Add your video file path here -->
             <source src="static/videos/banner_video.mp4" type="video/mp4">
           </video>
-          <!-- TODO: Replace with your video description -->
+          <h2 class="subtitle has-text-centered">
+            Our method achieves identity-preserving subject insertion in novel scenes harmoniously, simultaneously enabling diverse text-driven control.
+          </h2>
         </div>
       </div>
     </section>
@@ -270,15 +262,14 @@
         <div class="columns is-centered has-text-centered">
           <div class="column is-four-fifths">
             <h2 class="title is-3">Abstract</h2>
-            <div class="content has-text-justified">
-              <!-- TODO: Replace with your paper abstract -->
+            <div class="content has-text-justified glass-card">
               <p>
                 Recent advances in diffusion models have enhanced multimodal-guided visual generation, enabling customized subject insertion that seamlessly "brushes" user-specified objects into a given image guided by textual prompts. However, existing methods often struggle to insert customized subjects with high fidelity and align results with the user's intent through textual prompts. In this work, we propose "In-Context Brush", a zero-shot framework for customized subject insertion by reformulating the task within the paradigm of in-context learning. Without loss of generality, we formulate the object image and the textual prompts as cross-modal demonstrations, and the target image with the masked region as the query. The goal is to inpaint the target image with the subject aligning textual prompts without model tuning. Building upon a pretrained MMDiT-based inpainting network, we perform test-time enhancement via dual-level latent space manipulation: intra-head "latent feature shifting" within each attention head that dynamically shifts attention outputs to reflect the desired subject semantics and inter-head "attention reweighting" across different heads that amplifies prompt controllability through differential attention prioritization. Extensive experiments and applications demonstrate that our approach achieves superior identity preservation, text alignment, and image quality compared to existing state-of-the-art methods, without requiring dedicated training or additional data collection.
               </p>
 
               <!-- Representative figure -->
               <div class="has-text-centered" style="margin-top: 2rem;">
-                <img src="static/images/representative_image.jpg" alt="" style="max-width: 100%; height: auto;"/>
+                <img src="./static/images/representative_image.jpg" alt="" style="max-width: 100%; height: auto;"/>
                 <p class="subtitle has-text-centered" style="margin-top: 1rem; font-size: 1rem;">
                   Our method achieves identity-preserving subject insertion in novel scenes harmoniously, simultaneously enabling diverse text-driven control.
                 </p>
@@ -297,9 +288,9 @@
         <div class="columns is-centered has-text-centered">
           <div class="column is-four-fifths">
             <h2 class="title is-3">Method</h2>
-            <div class="content has-text-justified">
+            <div class="content has-text-justified glass-card">
               <div class="has-text-centered" style="margin-bottom: 2rem;">
-                <img src="static/images/method.png" alt="" style="max-width: 100%; height: auto;"/>
+                <img src="./static/images/method.png" alt="" style="max-width: 100%; height: auto;"/>
               </div>
               <p>
                 We mainly introduce latent space shifting for subject present in target images in a training-free manner. In the “Latent Feature Shifting” part, features from the reference are shifted to output. We propose attention heads activation for further enhance representation of textual prompts and token blending for consistency injection within the image.
@@ -312,15 +303,15 @@
     <!-- End method section -->
 
 
-    <!-- Qualitative comparison section -->
+    <!-- Experiments section -->
     <section class="section hero is-light">
       <div class="container is-max-desktop">
         <div class="columns is-centered has-text-centered">
           <div class="column is-four-fifths">
             <h2 class="title is-3">Experiments</h2>
-            <div class="content has-text-justified">
+            <div class="content has-text-justified glass-card">
               <div class="has-text-centered" style="margin-bottom: 2rem;">
-                <img src="static/images/experiments.png" alt="" style="max-width: 100%; height: auto;"/>
+                <img src="./static/images/experiments.png" alt="" style="max-width: 100%; height: auto;"/>
                 <p class="subtitle has-text-centered" style="margin-top: 1rem; font-size: 1rem;">
                   Qualitative comparison on subject injection and editing with baseline methods.
                 </p>
@@ -333,7 +324,7 @@
         </div>
       </div>
     </section>
-    <!-- End qualitative comparison section -->
+    <!-- End experiments section -->
 
 
     <!-- Applications section -->
@@ -346,21 +337,21 @@
               <img src="static/images/applications_virtual_try_on.png"
                 alt="" loading="lazy" />
               <h2 class="subtitle has-text-centered">
-                <strong>Virtual try on.</strong>
+                <strong>Virtual Try-On.</strong>
               </h2>
             </div>
             <div class="item">
               <img src="static/images/applications_compositional_generation.png"
                 alt="" loading="lazy" />
               <h2 class="subtitle has-text-centered">
-                <strong>Compositional generation.</strong>
+                <strong>Compositional Generation.</strong>
               </h2>
             </div>
             <div class="item">
               <img src="static/images/applications_partly_insertion.png" alt=""
                 loading="lazy" />
               <h2 class="subtitle has-text-centered">
-                <strong>Partly insertion.</strong>
+                <strong>Partial Insertion.</strong>
               </h2>
             </div>
           </div>

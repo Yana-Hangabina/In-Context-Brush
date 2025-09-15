@@ -1,6 +1,5 @@
 window.HELP_IMPROVE_VIDEOJS = false;
 
-// More Works Dropdown Functionality
 function toggleMoreWorks() {
     const dropdown = document.getElementById('moreWorksDropdown');
     const button = document.querySelector('.more-works-btn');
@@ -14,7 +13,6 @@ function toggleMoreWorks() {
     }
 }
 
-// Close dropdown when clicking outside
 document.addEventListener('click', function(event) {
     const container = document.querySelector('.more-works-container');
     const dropdown = document.getElementById('moreWorksDropdown');
@@ -26,7 +24,6 @@ document.addEventListener('click', function(event) {
     }
 });
 
-// Close dropdown on escape key
 document.addEventListener('keydown', function(event) {
     if (event.key === 'Escape') {
         const dropdown = document.getElementById('moreWorksDropdown');
@@ -36,34 +33,31 @@ document.addEventListener('keydown', function(event) {
     }
 });
 
-// Copy BibTeX to clipboard
 function copyBibTeX() {
     const bibtexElement = document.getElementById('bibtex-code');
     const button = document.querySelector('.copy-bibtex-btn');
     const copyText = button.querySelector('.copy-text');
-    
+
     if (bibtexElement) {
         navigator.clipboard.writeText(bibtexElement.textContent).then(function() {
-            // Success feedback
             button.classList.add('copied');
-            copyText.textContent = 'Cop';
-            
+            copyText.textContent = 'Copied!';
+
             setTimeout(function() {
                 button.classList.remove('copied');
                 copyText.textContent = 'Copy';
             }, 2000);
         }).catch(function(err) {
             console.error('Failed to copy: ', err);
-            // Fallback for older browsers
             const textArea = document.createElement('textarea');
             textArea.value = bibtexElement.textContent;
             document.body.appendChild(textArea);
             textArea.select();
             document.execCommand('copy');
             document.body.removeChild(textArea);
-            
+
             button.classList.add('copied');
-            copyText.textContent = 'Cop';
+            copyText.textContent = 'Copied!';
             setTimeout(function() {
                 button.classList.remove('copied');
                 copyText.textContent = 'Copy';
@@ -72,7 +66,6 @@ function copyBibTeX() {
     }
 }
 
-// Scroll to top functionality
 function scrollToTop() {
     window.scrollTo({
         top: 0,
@@ -80,7 +73,6 @@ function scrollToTop() {
     });
 }
 
-// Show/hide scroll to top button
 window.addEventListener('scroll', function() {
     const scrollButton = document.querySelector('.scroll-to-top');
     if (window.pageYOffset > 300) {
@@ -90,53 +82,141 @@ window.addEventListener('scroll', function() {
     }
 });
 
-// Video carousel autoplay when in view
 function setupVideoCarouselAutoplay() {
     const carouselVideos = document.querySelectorAll('.results-carousel video');
-    
+
     if (carouselVideos.length === 0) return;
-    
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             const video = entry.target;
             if (entry.isIntersecting) {
-                // Video is in view, play it
                 video.play().catch(e => {
-                    // Autoplay failed, probably due to browser policy
                     console.log('Autoplay prevented:', e);
                 });
             } else {
-                // Video is out of view, pause it
                 video.pause();
             }
         });
     }, {
-        threshold: 0.5 // Trigger when 50% of the video is visible
+        threshold: 0.5
     });
-    
+
     carouselVideos.forEach(video => {
         observer.observe(video);
     });
 }
 
 $(document).ready(function() {
-    // Check for click events on the navbar burger icon
-
     var options = {
-		slidesToScroll: 1,
-		slidesToShow: 1,
-		loop: true,
-		infinite: true,
-		autoplay: true,
-		autoplaySpeed: 5000,
+        slidesToScroll: 1,
+        slidesToShow: 1,
+        loop: true,
+        infinite: true,
+        autoplay: true,
+        autoplaySpeed: 5000,
+        breakpoints: [
+            { changePoint: 480, slidesToShow: 1, slidesToScroll: 1 },
+            { changePoint: 768, slidesToShow: 1, slidesToScroll: 1 },
+            { changePoint: 1024, slidesToShow: 1, slidesToScroll: 1 }
+        ]
     }
 
-	// Initialize all div with carousel class
-    var carousels = bulmaCarousel.attach('.carousel', options);
-	
+    setTimeout(function() {
+        var carousels = bulmaCarousel.attach('.carousel', options);
+
+        if (carousels && carousels.length > 0) {
+            carousels.forEach(function(carousel) {
+                carousel.on('after', function() {
+                    const items = document.querySelectorAll('.carousel .item');
+                    items.forEach(function(item) {
+                        item.style.display = 'block';
+                        item.style.visibility = 'visible';
+                    });
+                });
+
+                carousel.on('ready', function() {
+                    console.log('Carousel ready');
+                    const images = document.querySelectorAll('.carousel .item img');
+                    images.forEach(function(img) {
+                        if (!img.complete) {
+                            img.addEventListener('load', function() {
+                                console.log('Image loaded in carousel:', this.src);
+                            });
+                        }
+                    });
+                });
+            });
+        }
+
+        const forceShowItems = function() {
+            const items = document.querySelectorAll('#results-carousel .item');
+            items.forEach(function(item, index) {
+                item.style.display = 'block';
+                item.style.visibility = 'visible';
+                item.style.opacity = '1';
+                item.style.position = 'relative';
+
+                if (index === 0) {
+                    item.classList.add('is-active');
+                }
+            });
+        };
+
+        setTimeout(forceShowItems, 200);
+        setTimeout(forceShowItems, 1000);
+    }, 100);
+
     bulmaSlider.attach();
-    
-    // Setup video autoplay for carousel
+
     setupVideoCarouselAutoplay();
 
+    const checkCarouselVisibility = function() {
+        const items = document.querySelectorAll('.carousel .item');
+        items.forEach(function(item) {
+            item.style.display = 'block';
+            item.style.visibility = 'visible';
+            item.style.opacity = '1';
+        });
+    };
+
+    setTimeout(checkCarouselVisibility, 500);
+    setTimeout(checkCarouselVisibility, 1000);
+
+    setupImageErrorHandling();
+
 })
+
+function setupImageErrorHandling() {
+    const images = document.querySelectorAll('.carousel .item img');
+    images.forEach(function(img) {
+        img.addEventListener('error', function() {
+            console.log('Image failed to load:', this.src);
+            this.style.display = 'none';
+
+            const placeholder = document.createElement('div');
+            placeholder.className = 'image-placeholder';
+            placeholder.style.cssText = `
+                width: 100%;
+                height: 250px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                font-size: 1.2rem;
+                font-weight: 600;
+                text-align: center;
+                margin-bottom: 1rem;
+            `;
+            placeholder.textContent = 'Image Loading...';
+
+            this.parentNode.insertBefore(placeholder, this);
+        });
+
+        img.addEventListener('load', function() {
+            console.log('Image loaded successfully:', this.src);
+        });
+    });
+}
